@@ -5,13 +5,14 @@ function App() {
   const [contactos, setContactos] = useState([
     { id: 1, nombre: "Jamir", apellido: "Patiño", telefono: "1234567890", direccion: "Av. Siempreviva 123" },
     { id: 2, nombre: "Emerson", apellido: "Arce", telefono: "0987654321", direccion: "Calle Falsa 123" },
-    { id: 2, nombre: "Jean Carlos", apellido: "Blanco", telefono: "0987654321", direccion: "av final 123" }
+    { id: 3, nombre: "Jean Carlos", apellido: "Blanco", telefono: "0987654321", direccion: "av final 123" }
   ]);
   const [nuevoContacto, setNuevoContacto] = useState({ nombre: "", apellido: "", telefono: "", direccion: "" });
+  const [showChange, setShowChange] = useState(false);
 
   const crearContacto = (e) => {
     e.preventDefault();
-
+    setShowChange(false)
     if(nuevoContacto.id){
       actualizarContacto(nuevoContacto.id)
     } else {
@@ -93,7 +94,7 @@ function App() {
           />
         </div>
         <button type="submit" className="btn btn-primary mt-3">
-          Crear contacto
+          {showChange ? "Actualizar" : "Crear contacto"}
         </button>
       </form>
       <hr />
@@ -116,7 +117,11 @@ function App() {
               <td>{contacto.direccion}</td>
               <td>
                 <button className="btn btn-danger m-2" onClick={() => eliminarContacto(contacto.id)}>Eliminar</button>
-                <button className="btn btn-secondary" onClick={()=>setNuevoContacto(contacto)}>Actualizar</button>
+                <button className="btn btn-secondary" onClick={()=>{
+                  setNuevoContacto(contacto)
+                  setShowChange(true)
+                  }}
+                  >Actualizar</button>
               </td>
             </tr>
           ))}
